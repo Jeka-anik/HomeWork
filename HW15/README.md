@@ -13,7 +13,7 @@ anik@K53:~/dos-01/Lecture15$ vi .gitignore
 *.jar
 *.lib
 
-
+```bash
 anik@K53:~/dos-01/lecture15$ touch 1.exe
 anik@K53:~/dos-01/lecture15$ touch 3.jar
 anik@K53:~/dos-01/lecture15$ touch 2.o
@@ -37,7 +37,7 @@ anik@K53:~/dos-01/lecture15$ git commit -m "ver1.0"
  2 files changed, 0 insertions(+), 0 deletions(-)
  create mode 100644 lecture15/5.txt
  create mode 100644 lecture15/6.txt
-
+```
 
 
 # 2) Изменить регистр букв в файле
@@ -45,6 +45,7 @@ anik@K53:~/dos-01/lecture15$ git commit -m "ver1.0"
 Вы закоммитили File.txt, но осознали, что он должен быть file.txt
 Изменить это.
 
+```bash
 anik@K53:~/dos-01/lecture15$ touch File.txt
 anik@K53:~/dos-01/lecture15$ git add .
 anik@K53:~/dos-01/lecture15$ git commit -m "Fike"
@@ -60,6 +61,7 @@ anik@K53:~/dos-01/lecture15$ git commit --amend --no-edit
  create mode 100644 lecture15/File.txt
  create mode 100644 lecture15/file.txt
 anik@K53:~/dos-01/lecture15$ 
+```
 
 # 3) Найти коммит, который был утерян
 
@@ -72,6 +74,7 @@ anik@K53:~/dos-01/lecture15$
 создам файл , сделаю несколько коммитов 
 лог 
 
+```bash
 anik@K53:~/dos-01/lecture15$ git log
 commit a98e6c990ce219c2b90ac7cc1ce1a7f48a4f86ec (HEAD -> DZ, origin/DZ)
 Author: Evgeniy <anik.evgeniy@gmail.com>
@@ -116,8 +119,9 @@ anik@K53:~/dos-01/lecture15$ git commit --amend
 Автослияние lecture15/file.txt
 КОНФЛИКТ (содержимое): Конфликт слияния в lecture15/file.txt
 Не удалось провести автоматическое слияние; исправьте конфликты и сделайте коммит результата.
-
+```
 а теперь вернем первую версию фикса в репозитории
+```bash
 git log
 
 наш коммит 
@@ -134,7 +138,7 @@ error: не удалось обратить изменения коммита 54
 подсказка: после разрешения конфликтов, пометьте исправленные пути
 подсказка: с помощью «git add <пути>» или «git rm <пути>»
 подсказка: и сделайте коммит с помощью «git commit»
-
+```
 
 откатил кароч) 
 
@@ -159,7 +163,7 @@ error: не удалось обратить изменения коммита 54
 
 результат в директории /lectore15/file.txt 
 
-# Manual hunk edit mode -- see bottom for a quick guide.
+Manual hunk edit mode -- see bottom for a quick guide.
 @@ -1,2 +1,5 @@
 -часть 1
 -просто текст и какая то работа. первая редакция 
