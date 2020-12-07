@@ -10,6 +10,27 @@ echo "parametr $count = $i"
 count=$(($count+1))
 done
 ```
+сделал 
+```bash
+#!/bin/bash
+count=1
+while [ -n "$1" ]
+do 
+echo "parametr nomer $count = $1" 
+count=$[ $count+1 ]
+shift
+done
+exit
+```
+Вывод 
+```bash
+anik@K53:~/HomeWork/HW21$ ./task1.sh 45 5 8 4 
+parametr nomer 1 = 45
+parametr nomer 2 = 5
+parametr nomer 3 = 8
+parametr nomer 4 = 4
+anik@K53:~/HomeWork/HW21$ 
+```
 
 
 
@@ -32,7 +53,7 @@ MAILTO=jeka1993g@mail.ru
 NAME=ALERT
 SMTPSERVER=smtp.mail.ru
 SMTPLOGIN=jeka1993g@mail.ru 
-SMTPPASS=199514qaz
+SMTPPASS=*********
 var=$(ssh rab2@192.168.122.150 'bash -s' < part1.sh) 
 bar=$( echo $var | sed 's/,/./')
 echo $bar
