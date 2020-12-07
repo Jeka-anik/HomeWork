@@ -30,8 +30,3 @@ if (( $(echo "$var1<7" | bc -l) ))
         fi
     fi
 fi
-
-
-
-
-
