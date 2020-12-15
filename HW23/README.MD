@@ -356,6 +356,7 @@ worker_1  | Waiting for db
 ```
 запустим все своими руками
 сначала создадим сети
+```bash
 anik@K53:~/HomeWork/HW23/Part4/example-voting-app$ docker network create -d bridge front-tier
 aea648853f9444ae56d5e023facf71b32f0401e37775e5f4b43c00d820f553ea
 anik@K53:~/HomeWork/HW23/Part4/example-voting-app$ docker network create -d bridge back-tier
@@ -370,15 +371,15 @@ anik@K53:~/HomeWork/HW23/Part4/example-voting-app/worker$ docker build -t work .
 anik@K53:~/HomeWork/HW23/Part4/example-voting-app/worker$ docker run -it -d 133d21ccacea
 anik@K53:~/HomeWork/HW23/Part4/example-voting-app/worker$ docker run -p 6379:6379 -d redis:alpine 
 anik@K53:~/HomeWork/HW23/Part4/example-voting-app/worker$ docker run -it -e POSTGRES_USER=user -e POSTGRES_PASSWORD=123456 -v db-data:/var/lib/postgresql/data --link 27e91c4afcd5:27e91c4afcd5 -d postgres:9.4
-
+```
 попытка с линковкой
-
+```bash
 anik@K53:~/HomeWork/HW23/Part4/example-voting-app/vote$ docker run -it -p 5000:80 -d e79428dc277e
 anik@K53:~/HomeWork/HW23/Part4/example-voting-app/worker$ docker run -p 6379:6379 --link e10bf4b958f3:e10bf4b958f3 -d redis:alpine
 anik@K53:~/HomeWork/HW23/Part4/example-voting-app/worker$ docker run -it --link jolly_jennings:jolly_jennings -d 9ff2ad5274db
 anik@K53:~/HomeWork/HW23/Part4/example-voting-app/worker$ docker run -it -e POSTGRES_USER=user -e POSTGRES_PASSWORD=123456 -v db-data:/var/lib/postgresql/data --link keen_cori:keen_cori -d postgres:9.4
 anik@K53:~/HomeWork/HW23/Part4/example-voting-app/result$ docker run -it -p 5001:80 -p 5858:5858 --link strange_goldstine:strange_goldstine -d cb61e3b74452
-
+```
 
 # 5 * Посмотреть, что такое multistaged docker containers. Показать реализацию.
 
@@ -397,12 +398,13 @@ ENTRYPOINT ["/tasksleep.sh", "20"]
         "VirtualSize": 253283048,
         "GraphDriver":
 ```
+```bash
 docker run -it --name Sleep jekanik/sweetsleep:build 
 Hello
 docker create --name sleepcreate jekanik/sweetsleep:build
 af2037362d15bb69f696c02c2745468c842542ddb7552190362b1a6d43dad40b
 sudo docker cp sleepcreate:/tasksleep.sh ./Prod/
 sudo docker build --no-cache -t sleepcreate .
-
+```
 
 *В пулреквест скидывать только Dockerfile, docker-compose либо описание, как развертывали через docker run. Для каждого задания сделать свою папку, например 1,2,3  и тд (сами ответы на вопросы можно в телеграмм)*
