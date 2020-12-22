@@ -1,6 +1,10 @@
-FROM ansible/ubuntu14.04-ansible:stable
+FROM ubuntu:18.04
 
-COPY hosts /home/
-RUN ssh-keygen -y
-RUN ssh-copy-id root@192.168.100.40 && ssh-copy-id root@192.168.100.41
-CMD ansible -m ping all -i /home/hosts
+RUN apt-get update && \
+apt-get install -y software-properties-common &&\
+add-apt-repository --yes -u ppa:ansible/ansible &&\
+apt-get install -y ansible
+
+RUN echo '[local]\nlocalhost\n' > /etc/ansible/hosts
+COPY . /etc/ansible/
+
