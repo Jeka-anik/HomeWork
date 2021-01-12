@@ -1,9 +1,9 @@
 ---   
 - name: Install Docker for ubuntu
-  hosts: prod
+  hosts: qa2
   become: yes
-  vars_files:
-    - vars/vars_default.yml
+ # vars_files:
+ #   - vars/vars_default.yml
   tasks:
     - name: Install aptitude using apt
       apt: name=aptitude state=latest update_cache=yes force_apt_get=yes

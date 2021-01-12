@@ -1,9 +1,0 @@
----
-- hosts: ubuntu2
-  vars:
-    docker_ecs_login_password: "{{ lookup('env','ECS_LOGIN_PASSWORD') }}"
-  gather_facts: no
-  environment:
-    PYTHONPATH: "{{ lookup('env','PYTHONPATH') }}:/usr/local/lib/python2.7/dist-packages:/usr/local/lib/python2.7/site-packages"
-  roles:
-    - { role: dronze4slack }

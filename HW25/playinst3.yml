@@ -1,9 +1,9 @@
 ---   
 - name: Install Docker for CentOS
-  hosts: dev
+  hosts: qa
   become: yes
-  vars_files:
-    - vars/vars_default.yml
+  #vars_files:
+ #   - vars/vars_default.yml
   tasks:
 
     - name: Install yum utils

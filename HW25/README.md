@@ -118,3 +118,93 @@ centos2                    : ok=9    changed=5    unreachable=0    failed=0    s
 ```
 
 # Развернуть приложение voting-app, используя docker-compose через ansible
+
+vm CentOS
+
+```bash
+[root@192 voting-app]# docker-compose ps
+       Name                      Command               State               Ports            
+--------------------------------------------------------------------------------------------
+db                    docker-entrypoint.sh postgres    Up      5432/tcp                     
+redis                 docker-entrypoint.sh redis ...   Up      0.0.0.0:49153->6379/tcp      
+voting-app_result_1   docker-entrypoint.sh nodem ...   Up      0.0.0.0:5858->5858/tcp,      
+                                                               0.0.0.0:5001->80/tcp         
+voting-app_vote_1     python app.py                    Up      0.0.0.0:5000->80/tcp         
+voting-app_worker_1   dotnet Worker.dll 
+```
+
+VM Ubuntu
+
+```bash
+root@dev:/tmp/voting-app# docker-compose ps
+       Name                      Command              State               Ports            
+-------------------------------------------------------------------------------------------
+db                    docker-entrypoint.sh postgres   Exit 1                               
+redis                 docker-entrypoint.sh redis      Up       0.0.0.0:49153->6379/tcp     
+                      ...                                                                  
+voting-app_result_1   docker-entrypoint.sh nodem      Up       0.0.0.0:5858->5858/tcp,     
+                      ...                                      0.0.0.0:5001->80/tcp        
+voting-app_vote_1     python app.py                   Up       0.0.0.0:5000->80/tcp        
+voting-app_worker_1   dotnet Worker.dll               Up                                   
+root@dev:/tmp/voting-app# 
+```
+Для поднятия voting-app на удаленных машинках, использовать playbook - *playcompall.yml* , листинг прилагается:
+```ansible
+---
+- name: docker-compose project 1
+  hosts: QA 
+  become: yes
+
+  tasks:
+
+    - name: Ansible os family
+      debug: var=ansible_os_family
+  
+    - block: # ====Block for CentOS=====
+      - name: install git 
+        yum:
+         name:  git-all
+         state: present
+
+      - name: install pip3
+        yum: name=python3-pip state=present  
+
+      when: ansible_os_family=="RedHat"
+
+    - block: #====Block for Debian ====
+       - name: install git 
+         apt:
+          name:  git
+          state: present
+
+      when: ansible_os_family=="Debian"  
+
+    - name: create folder
+      file:
+       path: /tmp/voting-app
+       state: directory
+       owner: root
+       mode: '0755'
+  
+    - name: inst compose
+      pip: 
+        name: 
+        - docker
+        - docker-compose
+        executable: pip3
+
+    - name: git clone
+      git:
+       clone: yes
+       repo: https://github.com/dockersamples/example-voting-app.git
+       dest: /tmp/voting-app
+       
+   
+    - name: compose up
+      community.general.docker_compose:
+         project_src: /tmp/voting-app
+         state: present 
+
+```
+Предпологается, что на машинках установлены докер и все необходимое. если нет, использовать playbook- *playinst2.yml* для Ubuntu/Debian, и *playinst3.yml* для CentOS/RedHat
+
