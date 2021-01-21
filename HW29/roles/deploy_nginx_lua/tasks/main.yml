@@ -1,0 +1,18 @@
+---
+# tasks file for deploy_nginx_lua
+- block: #== for Ubuntu
+
+   - name: inst Nginx for Ubuntu
+     apt: name=nginx state=present
+
+   - name: istall module NDK
+     apt: name=libnginx-mod-http-ndk state=present
+
+   - name: istall module Lua 
+     apt: name=libnginx-mod-http-lua state=present
+
+   - debug: msg="{{ansible_distribution}}"
+
+  when: ansible_os_family=="Debian" 
+
+

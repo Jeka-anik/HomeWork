@@ -1,0 +1,7 @@
+---
+- name: Inst NGINX + lua
+  hosts: QA
+  become: yes
+    
+  roles:
+   - deploy_nginx_lua

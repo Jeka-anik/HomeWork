@@ -1,0 +1,20 @@
+---
+- name: Deploy Apache Jmetr
+  hosts: qa2
+  become: yes
+
+  tasks:
+
+    - name: install Java
+      apt: name=openjdk-14-jre-headless state=latest
+      
+    - name: сreate directory
+      file: path=/tmp/jmetr state=directory
+
+    - name: unarchive  Jmetr
+      ansible.builtin.unarchive:
+       src: https://ftp.byfly.by/pub/apache.org//jmeter/binaries/apache-jmeter-5.4.tgz
+       dest: /tmp/jmetr
+       remote_src: True
+    
+     
