@@ -1,0 +1,6 @@
+---
+create_containers: 3
+default_container_name: nyan
+default_container_image: wernight/funbox
+default_container_command: sleep 600
+default_container_ports: 8
