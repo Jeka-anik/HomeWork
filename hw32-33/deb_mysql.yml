@@ -1,0 +1,7 @@
+---
+- name: Inst and deploy MySQL in server
+  hosts: AWS_U
+  become: yes
+
+  roles:
+   - deb_sql
