@@ -124,9 +124,23 @@ mysql> select cs.name, p.price FROM customer cs JOIN cart c ON cs.id=c.customer_
 +-------+-------+
 5 rows in set (0.00 sec)
 ```
-Группировка по расходам.
+Группировка по расходам. Добавил покупателю Dima, еще один телефон
 ```
-mysql> select cs.name, SUM(p.price) FROM customer cs JOIN cart c ON cs.id=c.customer_id JOIN product p ON p.id=c.product_idGROUP BY cs.name;
++-------+-------+
+| name  | price |
++-------+-------+
+| Dima  |   300 |
+| Vasya |   500 |
+| Oleg  |   600 |
+| Dima  |   600 |
+| Ivan  |   650 |
+| Kolya |   650 |
++-------+-------+
+6 rows in set (0.00 sec)
+```
+выполнил новый запрос:
+```
+mysql> select cs.name, SUM(p.price) FROM customer cs JOIN cart c ON cs.id=c.customer_id JOIN product p ON p.id=c.product_id GROUP BY cs.name;
 +-------+--------------+
 | name  | SUM(p.price) |
 +-------+--------------+
@@ -139,4 +153,3 @@ mysql> select cs.name, SUM(p.price) FROM customer cs JOIN cart c ON cs.id=c.cust
 5 rows in set (0.00 sec)
 ```
 
-# *Развернуть через ansible mysql master и слейву с репликацией(1 мастер и 2 слейва) В ansible делаем все через роли, можно посмотреть готовую роли в интернете.
