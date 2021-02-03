@@ -1,5 +1,5 @@
 [aws]
-AWS_U   ansible_ssh_host=13.48.27.100 
+AWS_U   ansible_ssh_host=13.48.47.219 
 
 [aws:vars]
 ansible_ssh_user=ubuntu

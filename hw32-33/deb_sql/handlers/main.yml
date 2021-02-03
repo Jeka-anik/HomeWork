@@ -1,2 +1,4 @@
 ---
-# handlers file for deb_sql
+
+- name: restart mysql
+  service: name=mysqld state=restarted

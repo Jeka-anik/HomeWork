@@ -53,9 +53,90 @@ max_allowed_packet          = 16M
 ```
 
 # Дополнить таблицу с корзиной в базе данных shop, с которой работали на уроке
-
+```
+mysql> select c.* from cart c;
++----+-------------+------------+
+| id | customer_id | product_id |
++----+-------------+------------+
+|  1 |           1 |          2 |
+|  2 |           2 |          1 |
+|  3 |           3 |          4 |
+|  4 |           4 |          3 |
+|  5 |           5 |          2 |
++----+-------------+------------+
+5 rows in set (0.00 sec)
+```
 
 # Посчитать суммарную корзину покупок для каждого из пользователей и отсортировать по порядку
+```
+mysql> select p.*, c.customer_id from product p left join cart c on p.id=c.product_id;
++----+---------+-------------+-------+-------------+
+| id | name    | description | price | customer_id |
++----+---------+-------------+-------+-------------+
+|  1 | samsung | galaxy      |   500 |           2 |
+|  2 | iphone  | x           |   650 |           5 |
+|  2 | iphone  | x           |   650 |           1 |
+|  3 | xiaomi  | mi          |   600 |           4 |
+|  4 | xiaomi  | redmi       |   300 |           3 |
+|  5 | huawei  | p40         |   400 |        NULL |
++----+---------+-------------+-------+-------------+
+6 rows in set (0.00 sec)
+```
+```
+mysql> select cs.name, c.product_id from customer cs left join cart c on cs.id=c.customer_id;
++-------+------------+
+| name  | product_id |
++-------+------------+
+| Ivan  |          2 |
+| Vasya |          1 |
+| Dima  |          4 |
+| Oleg  |          3 |
+| Kolya |          2 |
++-------+------------+
+5 rows in set (0.00 sec)
+```
 
+```
+mysql> select cs.name, p.price FROM customer cs JOIN cart c ON cs.id=c.customer_id JOIN product p ON p.id=c.product_id;
++-------+-------+
+| name  | price |
++-------+-------+
+| Ivan  |   650 |
+| Vasya |   500 |
+| Dima  |   300 |
+| Oleg  |   600 |
+| Kolya |   650 |
++-------+-------+
+5 rows in set (0.00 sec)
+```
+сортировка:
+
+```
+mysql> select cs.name, p.price FROM customer cs JOIN cart c ON cs.id=c.customer_id JOIN product p ON p.id=c.product_id ORDER BY p.price;
++-------+-------+
+| name  | price |
++-------+-------+
+| Dima  |   300 |
+| Vasya |   500 |
+| Oleg  |   600 |
+| Ivan  |   650 |
+| Kolya |   650 |
++-------+-------+
+5 rows in set (0.00 sec)
+```
+Группировка по расходам.
+```
+mysql> select cs.name, SUM(p.price) FROM customer cs JOIN cart c ON cs.id=c.customer_id JOIN product p ON p.id=c.product_idGROUP BY cs.name;
++-------+--------------+
+| name  | SUM(p.price) |
++-------+--------------+
+| Ivan  |          650 |
+| Vasya |          500 |
+| Dima  |          900 |
+| Oleg  |          600 |
+| Kolya |          650 |
++-------+--------------+
+5 rows in set (0.00 sec)
+```
 
 # *Развернуть через ansible mysql master и слейву с репликацией(1 мастер и 2 слейва) В ansible делаем все через роли, можно посмотреть готовую роли в интернете.

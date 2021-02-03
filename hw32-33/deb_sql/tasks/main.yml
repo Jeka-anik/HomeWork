@@ -1,6 +1,6 @@
 ---
  - name: Install the MySQL packages
-   apt: name={{ item }} state=present update_cache=yes
+   apt: name={{ item }} state=latest update_cache=yes
    loop:
      - mysql-server
      - mysql-client
@@ -10,7 +10,7 @@
  - name: Copy the configuration file (my.cnf)
    template: src=my.cnf.j2 dest=/etc/mysql/my.cnf
    notify:
-     - Restart mysql
+     - restart mysql
 
  - name: Copy the root credentials as .my.cnf file
    template: src=root.cnf.j2 dest=~/.my.cnf mode=0600
@@ -34,4 +34,4 @@
  - name: Remove the test database
    mysql_db: name=test state=absent
    notify:
-     - Restart mysql
+     - restart mysql
