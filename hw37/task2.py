@@ -12,7 +12,7 @@ class Students():
         self.lastname = lastname
         self.klass = klass
         self.rating = rating
- #       self.full = self.name + ':' + self.lastname +':'+ self.klass +':'+self.rating
+
  
 
     def full(self):

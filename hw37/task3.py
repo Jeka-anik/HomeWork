@@ -4,7 +4,6 @@ from mysql.connector import Error
 
 myfile = open('users.json', mode='r', encoding='Latin-1')
 json_data = json.load(myfile)
-# print(json_data)
 user1 = json_data["userList"]["users"][0]["userName"]
 user2 = json_data["userList"]["users"][1]["userName"]
 
@@ -21,11 +20,7 @@ def connect():
         if conn.is_connected():
             print('Connected to MySQL database')
         cur = conn.cursor()
-        # cur.execute("select * from cart")
-        # cur.execute("select price from cart where name=%s", (user2,))
-        # cur.execute("select price from cart where name=%s", (user1,))
         table = cur.execute("select * from cart")
-        # print(table)
         print(type(table))
         for line in cur.fetchall():
             if line[1] == user1:

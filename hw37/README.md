@@ -5,7 +5,7 @@
 4) деление
 добавить обработку ошибок
 
-
+Используй _task1.py_
 
 
 
@@ -15,6 +15,7 @@
 student = Students(‘Sergey:Kiyko:11:10’)
 
 
+Используй _task2.py_
 
 
 
@@ -40,3 +41,5 @@ student = Students(‘Sergey:Kiyko:11:10’)
   }
 }
 ```
+
+Используй _task3.py_
