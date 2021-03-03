@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+  <head>
+    <tittle>Web Tittle  this ip touch server {{ ansible_fqdn }} </tittle>
+    <style> css here </style>
+    <script> java script here </script>
+  </head>
+  
+  <body>
+    <h1 style="color:blue;"> My heading in blue, thus is server running {{ ansible_os_family }} </h1>
+    <p style="font-weight:bold"> paragraph in bold, this is owner, big bro {{ owner }} </p>
+    <p style="font-weight:bold"> tut operator if work,a your name: - {{ owner if (ansible_os_family == 'Debian') else owner2 }}  </p>
+  </body>
+</html>
