@@ -147,3 +147,5 @@ arn:aws:sns:eu-north-1:658683390959:Evgen:a468c0f6-a14f-45c0-bbde-cb9a3158d458
 Completed. Смотреть папку media
 
 # Обернуть 1 пункт в баш скрипт
+
+run file *autoAWS.sh*
