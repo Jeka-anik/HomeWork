@@ -1071,8 +1071,135 @@ https://aws.amazon.com/amazon-linux-2/
 ```
 
 # Создать RDS с мастер-мастер репликацией, и мастер-слейв репликацией
+```json
+anik@K53:~$ aws rds create-db-instance-read-replica \
+>     --db-instance-identifier test-instance-repl \
+>     --source-db-instance-identifier database-1
+{
+    "DBInstance": {
+        "DBInstanceIdentifier": "test-instance-repl",
+        "DBInstanceClass": "db.t2.micro",
+        "Engine": "mysql",
+        "DBInstanceStatus": "creating",
+        "MasterUsername": "admin",
+        "AllocatedStorage": 20,
+        "PreferredBackupWindow": "08:04-08:34",
+        "BackupRetentionPeriod": 0,
+        "DBSecurityGroups": [],
+        "VpcSecurityGroups": [
+            {
+                "VpcSecurityGroupId": "sg-ebf7fae3",
+                "Status": "active"
+            }
+        ],
+        "DBParameterGroups": [
+            {
+                "DBParameterGroupName": "default.mysql8.0",
+                "ParameterApplyStatus": "in-sync"
+            }
+        ],
+        "DBSubnetGroup": {
+            "DBSubnetGroupName": "default-vpc-a067c6dd",
+            "DBSubnetGroupDescription": "Created from the RDS Management Console",
+            "VpcId": "vpc-a067c6dd",
+            "SubnetGroupStatus": "Complete",
+            "Subnets": [
+                {
+                    "SubnetIdentifier": "subnet-82d09f8c",
+                    "SubnetAvailabilityZone": {
+                        "Name": "us-east-1f"
+                    },
+                    "SubnetOutpost": {},
+                    "SubnetStatus": "Active"
+                },
+                {
+                    "SubnetIdentifier": "subnet-de745093",
+                    "SubnetAvailabilityZone": {
+                        "Name": "us-east-1d"
+                    },
+                    "SubnetOutpost": {},
+                    "SubnetStatus": "Active"
+                },
+                {
+                    "SubnetIdentifier": "subnet-4369fc25",
+                    "SubnetAvailabilityZone": {
+                        "Name": "us-east-1b"
+                    },
+                    "SubnetOutpost": {},
+                    "SubnetStatus": "Active"
+                },
+                {
+                    "SubnetIdentifier": "subnet-da21b785",
+                    "SubnetAvailabilityZone": {
+                        "Name": "us-east-1a"
+                    },
+                    "SubnetOutpost": {},
+                    "SubnetStatus": "Active"
+                },
+                {
+                    "SubnetIdentifier": "subnet-e2d008d3",
+                    "SubnetAvailabilityZone": {
+                        "Name": "us-east-1e"
+                    },
+                    "SubnetOutpost": {},
+                    "SubnetStatus": "Active"
+                },
+                {
+                    "SubnetIdentifier": "subnet-4dea796c",
+                    "SubnetAvailabilityZone": {
+                        "Name": "us-east-1c"
+                    },
+                    "SubnetOutpost": {},
+                    "SubnetStatus": "Active"
+                }
+            ]
+        },
+        "PreferredMaintenanceWindow": "tue:04:48-tue:05:18",
+        "PendingModifiedValues": {},
+        "MultiAZ": false,
+        "EngineVersion": "8.0.20",
+        "AutoMinorVersionUpgrade": true,
+        "ReadReplicaSourceDBInstanceIdentifier": "database-1",
+        "ReadReplicaDBInstanceIdentifiers": [],
+        "LicenseModel": "general-public-license",
+        "OptionGroupMemberships": [
+            {
+                "OptionGroupName": "default:mysql-8-0",
+                "Status": "pending-apply"
+            }
+        ],
+        "PubliclyAccessible": false,
+        "StorageType": "gp2",
+        "DbInstancePort": 0,
+        "StorageEncrypted": false,
+        "DbiResourceId": "db-Z4MC24OGXLIBTSRJFCOFAO2IEQ",
+        "CACertificateIdentifier": "rds-ca-2019",
+        "DomainMemberships": [],
+        "CopyTagsToSnapshot": false,
+        "MonitoringInterval": 0,
+        "DBInstanceArn": "arn:aws:rds:us-east-1:658683390959:db:test-instance-repl",
+        "IAMDatabaseAuthenticationEnabled": false,
+        "PerformanceInsightsEnabled": false,
+        "DeletionProtection": false,
+        "AssociatedRoles": [],
+        "MaxAllocatedStorage": 1000,
+        "TagList": [],
+        "CustomerOwnedIpEnabled": false
+    }
+}
 
+```
 
 
 # Написать скрипт на Python, который будет делать бэкап базы по расписанию и хранить на s3
+aws rds start-export-task \
+    --export-task-identifier test-snap \
+    --source-arn arn:aws:rds:us-east-1:658683390959:snapshot:rds:database-1-2021-03-11-09-32 \
+    --s3-bucket-name dos01.student \
+    --iam-role-arn rds-s3-export-role \
+    --kms-key-id master_key
+
+
+
+
 * Развернуть наше Flask/Django приложение в lambda(данные(json) можно читать из s3 или базы)
