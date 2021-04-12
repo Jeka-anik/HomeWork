@@ -1,0 +1,11 @@
+#! /bin/bash
+sudo apt-get update
+sudo apt-get install -y nginx
+sudo systemctl start nginx
+sudo systemctl enable nginx
+cat <<EOF > /var/www/html/index.html
+"<h1>Deployed via 
+%{ for i in tools ~}
+${i} <br>
+%{endfor ~} by ${team}</h1>"
+EOF
