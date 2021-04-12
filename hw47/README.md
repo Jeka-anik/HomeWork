@@ -78,4 +78,30 @@ pipeline {
 
 # У нас есть любой python code(лучше взять свой код, когда мы писали flask приложение). При пуше в репу мы забираем этот код(должны быть настроены git credentials), запускаем pytests и дальше собираем Docker container и закидываем его на Docker Hub(лучше в ecr в aws, но там ограничения по фри тир, нужно посмотреть).
 
+```json
+pipeline {
+  environment {
+    imagename = "jekanik/project-build"
+    registryCredential = 'git'
+    dockerImage = ''
+  }
+  agent any
+  stages {
+    stage('Cloning Git') {
+      steps {
+        checkout scm 
+
+      }
+    }
+  
+  stage("Prepare build image") {
+            steps {
+                sh "docker build -f Dockerfile . -t jekanik/project-build:${BUILD_ID}"
+                sh "docker login -u jekanik -p${password}"
+                sh "docker push jekanik/project-build:${BUILD_ID}"
+            }
+        }
+  }
+}
+```
 ## Выполнить задания через Jenkinsfile
