@@ -1,6 +1,6 @@
 provider "aws" {
-    access_key = "AKIAZSXEW5PXUGXFR2WY"
-    secret_key = "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"
+    access_key = "*************"
+    secret_key = "***********"
     region = "us-east-1"
 }
 resource "aws_placement_group" "test" {
