@@ -1,0 +1,9 @@
+---
+- name: Inst NGINX 
+  hosts: QA
+  become: yes
+    
+  roles:
+   - deploy_nginx_web
+
+

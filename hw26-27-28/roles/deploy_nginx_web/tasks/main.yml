@@ -1,0 +1,44 @@
+---
+# tasks file for deploy_nginx_web
+- block: # == for centos
+
+   - name: inst Nginx for CentOS
+     yum: name=nginx state=latest
+
+   - name: start service NGINX
+     ansible.builtin.service: name=nginx state=started enabled=yes
+
+   - ansible.posix.firewalld: # open http
+      service: http
+      permanent: yes
+      state: enabled
+
+   - name: restart nginx after firewall-cmd
+     ansible.builtin.service: name=nginx state=restarted
+
+   - name: Copy virtualhost config
+     template: src=default.conf dest=/etc/nginx/conf.d/{{ server_name }}.conf
+  
+  when: ansible_os_family=="RedHat"
+
+- block: #== for Ubuntu
+
+   - name: inst Nginx for Ubuntu
+     apt: name=nginx state=latest
+
+   - name: Copy virtualhost config
+     template: src=default.conf dest=/etc/nginx/sites-available/{{ server_name }} mode='0755'
+
+   - name: Create symbolic link activation
+     ansible.builtin.file: src=/etc/nginx/sites-available/{{ server_name }} dest=/etc/nginx/sites-enabled/{{ server_name }} state=link owner=root group=root mode=0755 force=true
+
+  when: ansible_os_family=="Debian" 
+
+- name: Create directory for virtualhost
+  ansible.builtin.file: dest=/var/www/{{ server_name }}/html/ state=directory mode='0755'
+
+- name: Copy and generate index.html
+  template: src=index.j2 dest=/var/www/{{ server_name }}/html/index.html
+  notify: 
+    - restart nginx Ubuntu
+    - restart nginx Centos
