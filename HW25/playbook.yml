@@ -1,0 +1,26 @@
+---
+- name: Install apach
+  hosts: dev
+  become: yes 
+  tasks:
+
+    - name: install httpd
+      yum: name=httpd state=latest
+
+    - name: Copy 
+      copy: src=index.html dest=/var/www/html mode=0640
+      #template: src=index.j2 dest=/var/www/html/
+      notify: Restart httpd
+
+  handlers:
+    - name: Restart httpd
+      service: name=httpd state=restarted
+
+      #- name: Install nginx for CentOS
+#  hosts: dev
+#  become: yes
+
+ # tasks:
+    
+ #   -name: Ubuntu nginx
+ #    yum: name=nginx state=latest

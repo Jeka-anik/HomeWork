@@ -1,0 +1,45 @@
+
+[dev]
+centos1 ansible_ssh_host=192.168.100.40 
+centos2 ansible_ssh_host=192.168.100.41
+
+[stage]
+CentOs ansible_ssh_host=192.168.100.17
+
+[qa]
+CentOsina ansible_ssh_host=192.168.100.20
+
+[qa2]
+Ubusina ansible_ssh_host=192.168.100.35
+
+[prod]
+ubuntu1 ansible_ssh_host=192.168.122.56 
+ubuntu2 ansible_ssh_host=192.168.122.83 
+
+
+[QA:children]
+qa
+qa2
+
+[prod:vars]
+ansible_ssh_user=root
+ansible_ssh_private_key_file=~/.ssh/id_rsa
+
+[stage:vars]
+ansible_ssh_user=root
+ansible_ssh_private_key_file=~/.ssh/id_rsa
+
+[dev:vars]
+ansible_ssh_user=root
+ansible_ssh_private_key_file=~/.ssh/id_rsa
+
+[qa:vars]
+ansible_ssh_user=root
+ansible_ssh_private_key_file=~/.ssh/id_rsa
+
+[qa2:vars]
+ansible_ssh_user=root
+ansible_ssh_private_key_file=~/.ssh/id_rsa
+
+
+
