@@ -1,0 +1,17 @@
+---
+# handlers file for deploy_nginx_lua
+- name: restart nginx Ubuntu
+  ansible.builtin.service: name=nginx state=restarted enabled=yes
+  when: ansible_os_family=="Debian"
+- name: restart nginx Centos
+  ansible.builtin.service: name=nginx state=restarted enabled=yes
+  when: ansible_os_family=="RedHat"
+- name: restart openresty
+  service: name=openresty state=restarted
+
+- name: validate openresty configuration
+  command: openresty -t
+  changed_when: False
+
+- name: reload openresty
+  service: name=openresty state=reloaded
