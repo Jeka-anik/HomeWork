@@ -1,0 +1,14 @@
+---
+- name: this is playbook for test
+  hosts: dev
+  become: yes
+
+  vars: 
+    source: ./tempfile/
+    folder: /home/
+
+  tasks:
+
+  - name: Copy file
+    copy: src={{ source }} dest={{ folder }} mode=0555
+
