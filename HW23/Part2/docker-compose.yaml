@@ -1,0 +1,12 @@
+version: '2'
+services: 
+
+  web:
+    image: ubuntu 
+    ports:
+      - "5000:5001"
+  db:
+    image: postgres
+
+  
+
