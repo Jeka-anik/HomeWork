@@ -1,0 +1,17 @@
+---
+# tasks file for deploy_nginx_web
+- block: #== for Ubuntu
+
+   - name: inst Nginx for Ubuntu
+     apt: name=nginx state=latest
+
+   - name: Copy virtualhost config
+     template: src=default.conf dest=/etc/nginx/sites-available/{{ ansible_fqdn }} mode='0755'
+
+   - name: Create symbolic link activation
+     ansible.builtin.file: src=/etc/nginx/sites-available/{{ ansible_fqdn }} dest=/etc/nginx/sites-enabled/{{ ansible_fqdn }} state=link owner=root group=root mode=0755 force=true
+
+  when: ansible_os_family=="Debian" 
+
+- name: Create directory for virtualhost
+  ansible.builtin.file: dest=/var/www/{{ ansible_fqdn }}/html/ state=directory mode='0755'
