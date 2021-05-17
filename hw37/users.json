@@ -1,0 +1,19 @@
+{
+    "userList": {
+        "users": [
+            {
+                "Code": "test1",
+                "userName": "Dima",
+                "admin": "false",
+                "DateCreation": "dfg"
+            },
+            {
+                "Code": "test4",
+                "userName": "Sergey",
+                "admin": "true",
+                "DateCreation": "fdgcv"
+            }
+         ]
+      }
+    }
+    
